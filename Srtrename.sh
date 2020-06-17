@@ -7,8 +7,7 @@ tmp=$(mktemp /tmp/tmp)
 tmptwo=$(mktemp /tmp/tmptwo)
 tmpthree=$(mktemp /tmp/tmpthree)
 ls -1d -- */ > "$tmp"
-minsize=450000
-#minsize=600
+minsize=0
 pwd=$PWD
 lc=1
 c=-1
@@ -34,19 +33,19 @@ if [[ $checkfolderdups -gt 1 ]]
 then
 	if [ $cpnum == 1 ]
 	then
-		mv "$file" "$name".mp4
-		mv "$name".mp4 "$pwd/movies/$name".mp4
+		mv "$file" "$name".srt
+		mv "$name".srt "$pwd/movies/$name".srt
 		cpnum=$(expr $cpnum + 1)
 	else
 		namenum=$(expr $cpnum - 1)
-		cpname=$(echo ${name}_copy_${namenum}.mp4)
+		cpname=$(echo ${name}_copy_${namenum}.srt)
 		mv "$file" "$cpname"
 		mv "$cpname" "$pwd/movies/$cpname"
 		cpnum=$(expr $cpnum + 1)
 fi
 else
-	mv "$file" "$name".mp4
-	mv "$name".mp4 "$pwd/movies/$name".mp4
+	mv "$file" "$name".srt
+	mv "$name".srt "$pwd/movies/$name".srt
 fi
 }
 
@@ -57,7 +56,7 @@ if [ $cpnum == 1 ]; then
 		duplicate=$(ls -t1 "$pwd/movies/" | grep "$name" | tail -1)
 		#duplicate=$(ls -t1 "$pwd/movies/" | grep "$name" | sed -n "$numduplicates"p)
 		touch "$pwd/movies/$duplicate"
-		dpname=$(echo ${name}_duplicate_${i}.mp4)
+		dpname=$(echo ${name}_duplicate_${i}.srt)
 		mv "$pwd/movies/$duplicate" "$pwd/movies/$dpname"
 	done
 fi
@@ -78,7 +77,7 @@ fi
 }
 
 files () {
-for f in *.mp4; do
+for f in *.srt; do
 	changefiles
 done
 }
