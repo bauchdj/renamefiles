@@ -43,7 +43,7 @@ then
 		mv "$file" "$cpname"
 		mv "$cpname" "$pwd/movies/$cpname"
 		cpnum=$(expr $cpnum + 1)
-fi
+	fi
 else
 	mv "$file" "$name".mp4
 	mv "$name".mp4 "$pwd/movies/$name".mp4
