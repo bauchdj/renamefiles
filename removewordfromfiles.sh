@@ -8,7 +8,7 @@ for f in *; do
 	#name=${f/The Yogi Bear Show - /}
 	#name=${f/Scooby Doo Mystery Incorporated /}
 	#mv "$f" "$name"
-	mv "$f" "Season 1 $f"
+	mv "$f" "firstlevel $f"
 done
 
 exit
