@@ -1,6 +1,7 @@
 #!/bin/bash
 #used to re-number camera pics
-c=1
+cc=$1 #have to store argument in the beginning
+c=3000
 numofzeros=("000" "00" "0" "")
 
 numberfiles () {
@@ -9,9 +10,10 @@ mv $f $name
 c=$(expr $c + 1)
 }
 
+fileloop () {
 for f in *; do
 	length=${#c}
- case $length in
+	case $length in
  	1 )
 		zeros=${numofzeros[0]}
  		;;
@@ -24,8 +26,17 @@ for f in *; do
  	4 )
 		zeros=${numofzeros[3]}
  		;;
- esac
+	esac
 	numberfiles
 done
+num=$(ls | wc -l)
+compare=$(echo "$(($num + 3000))")
+if [[ $c == $compare ]]; then
+	c=$cc #stored value $1
+	fileloop
+fi
+}
+
+fileloop
 
 exit
