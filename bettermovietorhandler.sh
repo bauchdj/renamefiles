@@ -1,7 +1,7 @@
 #!/bin/bash
 args=( "$@" )
 
-if [[ "${args[0]}" == "move" ]]; then
+if [[ "${args[0]}" == "move" ]] || [[ "${args[1]}" == "move" ]]; then
 	cd /Volumes/XSD/Downloads &> /dev/null
 
 	today=`ls -lt | awk '{print $6 " " $7}' | head -2 | tail -1`
