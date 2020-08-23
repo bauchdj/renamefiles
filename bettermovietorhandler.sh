@@ -16,23 +16,36 @@ fi
 cd /Volumes/XSD/Downloads/renames &> /dev/null
 pwd=$PWD
 mkdir movies &> /dev/null
+copynum=1
 
-rename () {
-	name=$(echo "$f" | tr " " . | tr . "(")
+copies () {
+	numfound=`ls "/$pwd/" | grep -v movies | tr " " . | tr . "(" | tr "(" " " | grep "$name" | wc -l | sed 's/^ *//g'`
+	if [[ "$numfound" > 1 ]]
+	then
+		mv "$f" "$pwd/movies/$name-copy$copynum.$filetype"
+		copynum=$(expr $copynum + 1)
+	else
+		mv "$f" "$pwd/movies/$name.$filetype"
+	fi
+}
+
+getname () {
+	name=$(echo "$d" | tr " " . | tr . "(")
 	name=${name/([0-9][0-9][0-9][0-9]/_date_}
 	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1)
-	#mv "$f" "$pwd/movies/$name.$filetype"
 }
 
 files () {
 for f in *; do
 	if [[ "${f: -3}" == "mp4" ]]; then
 		filetype="mp4"
-		rename
+		getname
+		copies
 	fi
 	if [[ "${f: -3}" == "srt" ]]; then
 		filetype="srt"
-		rename
+		getname
+		copies
 	fi
 done
 }
