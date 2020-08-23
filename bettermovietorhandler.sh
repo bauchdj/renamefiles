@@ -62,4 +62,8 @@ for d in */; do
   fi
 done
 
+if [[ "${args[0]}" == "finalmove" ]] || [[ "${args[1]}" == "finalmove" ]]; then
+		mv /Volumes/XSD/Downloads/renames/movies/* /Volumes/XSD/Media/Movies/
+fi
+
 exit
