@@ -35,14 +35,7 @@ getname () {
 	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//")
 }
 
-testing () { #creates files based on the names of movie folders in renames
-	getname
-	touch "/Volumes/XSD//Downloads/renames/$d/$name.mp4"
-	touch "/Volumes/XSD//Downloads/renames/$d/$name.srt"
-}
-
 files () {
-	#testing
 if [[ "${f: -3}" == "mp4" ]]; then
 	filetype="mp4"
 	getname
