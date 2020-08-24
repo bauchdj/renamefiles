@@ -32,33 +32,36 @@ copies () {
 getname () {
 	name=$(echo "$d" | tr " " . | tr . "(")
 	name=${name/([0-9][0-9][0-9][0-9]/_date_}
-	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1)
+	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//")
+}
+
+testing () { #creates files based on the names of movie folders in renames
+	getname
+	touch "/Volumes/XSD//Downloads/renames/$d/$name.mp4"
+	touch "/Volumes/XSD//Downloads/renames/$d/$name.srt"
 }
 
 files () {
-for f in *; do
-	if [[ "${f: -3}" == "mp4" ]]; then
-		filetype="mp4"
-		getname
-		copies
-	fi
-	if [[ "${f: -3}" == "srt" ]]; then
-		filetype="srt"
-		getname
-		copies
-	fi
-done
-}
-
-directory () {
-target="$pwd/${d%/}"
-cd "$target"
-files
+	#testing
+if [[ "${f: -3}" == "mp4" ]]; then
+	filetype="mp4"
+	getname
+	copies
+fi
+if [[ "${f: -3}" == "srt" ]]; then
+	filetype="srt"
+	getname
+	copies
+fi
 }
 
 for d in */; do
 	if ! [ "$d" == "movies/" ]; then
-		directory
+		target="$pwd/${d%/}"
+		cd "$target"
+		for f in *; do
+			files
+		done
   fi
 done
 
