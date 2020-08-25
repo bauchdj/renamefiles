@@ -36,16 +36,19 @@ getname () {
 }
 
 files () {
-if [[ "${f: -3}" == "mp4" ]]; then
+case "${f: -3}" in
+	"mp4" )
 	filetype="mp4"
-	getname
-	copies
-fi
-if [[ "${f: -3}" == "srt" ]]; then
+		;;
+	"mkv" )
+	filetype="mkv"
+		;;
+	"srt" )
 	filetype="srt"
-	getname
-	copies
-fi
+		;;
+esac
+getname
+copies
 }
 
 for d in */; do
