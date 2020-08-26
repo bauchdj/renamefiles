@@ -1,8 +1,13 @@
 #!/bin/bash
+#downloads="/Volumes/XSD/Downloads"
+#rename="/Volumes/XSD/Downloads/renames"
+downloads="/Users/djbii/Desktop/test"
+rename="/Users/djbii/Desktop/test/renames"
+
 args=( "$@" )
 
 if [[ "${args[0]}" == "move" ]] || [[ "${args[1]}" == "move" ]]; then
-	cd /Volumes/XSD/Downloads &> /dev/null
+	cd "$downloads" &> /dev/null
 
 	today=`ls -lt | awk '{print $6 " " $7}' | head -2 | tail -1`
 	numdownmovies=`ls -lt | grep "$today" | wc -l | sed 's/^ *//g'`
@@ -13,26 +18,32 @@ if [[ "${args[0]}" == "move" ]] || [[ "${args[1]}" == "move" ]]; then
 	done
 fi
 
-cd /Volumes/XSD/Downloads/renames &> /dev/null
+cd "$rename" &> /dev/null
 pwd=$PWD
 mkdir movies &> /dev/null
 copynum=1
 
 copies () {
-	numfound=`ls "/$pwd/" | grep -v movies | tr " " . | tr . "(" | tr "(" " " | grep "$name" | wc -l | sed 's/^ *//g'`
-	if [[ "$numfound" > 1 ]]
-	then
-		mv "$f" "$pwd/movies/$name-copy$copynum.$filetype"
-		copynum=$(expr $copynum + 1)
-	else
+	if [ $copynum == 1 ]
+	then # names first one of the numerous same named movies normally
 		mv "$f" "$pwd/movies/$name.$filetype"
+		copynum=$(expr $copynum + 1)
+	else # appends _copy_$copynum to the $name
+		namenum=$(expr $copynum - 1)
+		cpname=$(echo "${name}-copy_${namenum}")
+		mv "$f" "$pwd/movies/$cpname.$filetype"
+		copynum=$(expr $copynum + 1)
 	fi
 }
 
-getname () {
-	name=$(echo "$d" | tr " " . | tr . "(")
-	name=${name/([0-9][0-9][0-9][0-9]/_date_}
-	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//")
+rename () {
+	numfound=`ls "/$pwd/" | grep -v movies | tr " " . | tr . "(" | tr "(" " " | grep "$name" | wc -l | sed 's/^ *//g'`
+	if [[ "$numfound" > 1 ]]
+	then
+		copies
+	else
+		mv "$f" "$pwd/movies/$name.$filetype"
+	fi
 }
 
 files () {
@@ -47,8 +58,12 @@ case "${f: -3}" in
 	filetype="srt"
 		;;
 esac
-getname
-copies
+prevname="$name" # stores name before it changes
+name=$(echo "$d" | tr " " . | tr . "(") # 3 lines extract name from folders
+name=${name/([0-9][0-9][0-9][0-9]/_date_}
+name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//" | sed -e "s/\///g")
+if ! [[ $prevname == $name ]]; then copynum=1; fi # resets copynum to one if name changes
+rename
 }
 
 for d in */; do
