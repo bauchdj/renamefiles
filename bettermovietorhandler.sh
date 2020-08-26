@@ -1,8 +1,8 @@
 #!/bin/bash
-#downloads="/Volumes/XSD/Downloads"
-#rename="/Volumes/XSD/Downloads/renames"
-downloads="/Users/djbii/Desktop/test"
-rename="/Users/djbii/Desktop/test/renames"
+downloads="/Volumes/XSD/Downloads"
+rename="/Volumes/XSD/Downloads/renames"
+#downloads="/Users/djbii/Desktop/test"
+#rename="/Users/djbii/Desktop/test/renames"
 
 args=( "$@" )
 
