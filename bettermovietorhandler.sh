@@ -5,7 +5,6 @@ rename="/Volumes/XSD/Downloads/renames"
 #rename="/Users/djbii/Desktop/test/renames"
 
 args=( "$@" )
-
 if [[ "${args[0]}" == "move" ]] || [[ "${args[1]}" == "move" ]]; then
 	cd "$downloads" &> /dev/null
 
