@@ -9,12 +9,14 @@ move () {
 	#name=${f/Scooby Doo Mystery Incorporated /}
 
 	#touch /Users/djbii/Desktop/test/$f
-	name=$(echo "$f" | cut -d '[' -f1)
-	name=$(echo "$name" | cut -d '(' -f1)
-	name=$(echo "$name" | tr "-" " " | tr "." " ")
-	name=$(echo "$name" | sed 's/ *$//g')
+	#name=$(echo "$f" | cut -d '[' -f1)
+	#name=$(echo "$name" | cut -d '(' -f1)
+	#name=$(echo "$name" | tr "-" " " | tr "." " ")
+	#name=$(echo "$name" | sed 's/ *$//g')
 
-	mv "$f" "$name.mp4"
+	name=$(echo "$f" | cut -d '-' -f1)
+
+	mv "$f" "$name.mp3"
 	#mv "$f" "firstlevel $f"
 }
 
