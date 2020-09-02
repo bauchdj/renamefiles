@@ -19,7 +19,6 @@ fi
 
 cd "$rename" &> /dev/null
 pwd=$PWD
-mkdir movies &> /dev/null
 copynum=1
 
 copies () {
@@ -36,6 +35,12 @@ copies () {
 }
 
 rename () {
+	mkdir "/$rename/movies" &> /dev/null
+	prevname="$name" # stores name before it changes
+	name=$(echo "$d" | tr " " . | tr . "(") # 3 lines extract name from folders
+	name=${name/([0-9][0-9][0-9][0-9]/_date_}
+	name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//" | sed -e "s/\///g")
+	if ! [[ $prevname == $name ]]; then copynum=1; fi # resets copynum to one if name changes
 	numfound=`ls "/$pwd/" | grep -v movies | tr " " . | tr . "(" | tr "(" " " | grep "$name" | wc -l | sed 's/^ *//g'`
 	if [[ "$numfound" > 1 ]]
 	then
@@ -49,20 +54,17 @@ files () {
 case "${f: -3}" in
 	"mp4" )
 	filetype="mp4"
+	rename
 		;;
 	"mkv" )
 	filetype="mkv"
+	rename
 		;;
 	"srt" )
 	filetype="srt"
+	rename
 		;;
 esac
-prevname="$name" # stores name before it changes
-name=$(echo "$d" | tr " " . | tr . "(") # 3 lines extract name from folders
-name=${name/([0-9][0-9][0-9][0-9]/_date_}
-name=$(echo "$name" | tr "(" " " | cut -d '_' -f1 | sed -e "s/ \{1,\}$//" | sed -e "s/\///g")
-if ! [[ $prevname == $name ]]; then copynum=1; fi # resets copynum to one if name changes
-rename
 }
 
 for d in */; do
