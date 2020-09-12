@@ -1,14 +1,11 @@
 #!/bin/bash
 #used to re-number camera pics
 cc=$1 #have to store argument in the beginning
+if [[ $cc -eq 0 ]]; then
+	cc=1
+fi
 c=3000
 numofzeros=("000" "00" "0" "")
-
-numberfiles () {
-name=${f/[0-9][0-9][0-9][0-9]/"$zeros""$c"}
-mv $f $name
-c=$(expr $c + 1)
-}
 
 fileloop () {
 for f in *; do
@@ -27,10 +24,13 @@ for f in *; do
 		zeros=${numofzeros[3]}
  		;;
 	esac
-	numberfiles
+	#renames files
+	name=${f/[0-9][0-9][0-9][0-9]/"$zeros""$c"}
+	mv $f $name
+	c=$(expr $c + 1)
 done
-num=$(ls | wc -l)
-compare=$(echo "$(($num + 3000))")
+numfiles=$(ls | wc -l)
+compare=$(echo "$(($numfiles + 3000))")
 if [[ $c == $compare ]]; then
 	c=$cc #stored value $1
 	fileloop
