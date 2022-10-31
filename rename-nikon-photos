@@ -1,6 +1,7 @@
 const fs = require('fs');
 let files = fs.readdirSync(__dirname);
-
+console.log(files);
+/*
 for (let i=1; i<=files.length; i++) {
   let filename = name[i],
   name = path.parse(filename).name,
@@ -14,3 +15,4 @@ for (let i=1; i<=files.length; i++) {
     });
   }
 }
+*/
