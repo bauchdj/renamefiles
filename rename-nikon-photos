@@ -1,6 +1,6 @@
 const fs = require('fs');
-const folder = 'Users/djbii/Desktop/103D3400' //__dirname for file's current directory
-let files = fs.readdirSync(folder);
+const folderPath = '/Users/djbii/Desktop/103D3400/' //__dirname for file's current directory
+let files = fs.readdirSync(folderPath);
 console.log(files);
 
 /*
