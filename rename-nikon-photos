@@ -1,6 +1,8 @@
 const fs = require('fs');
-let files = fs.readdirSync(__dirname);
+const folder = '~/Desktop/103D3400/' //__dirname for file's current directory
+let files = fs.readdirSync(folder);
 console.log(files);
+
 /*
 for (let i=1; i<=files.length; i++) {
   let filename = name[i],
