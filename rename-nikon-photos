@@ -8,16 +8,9 @@ for (let i=0; i<=files.length-1; i++) {
   name = path.parse(filename).name,
   ext = path.parse(filename).ext,
   numfromname = parseInt(name.split('_').pop());
-  //console.log(filename,ext,numfromname,i+1);
   if (numfromname > i) {
     let picnumber = (i+1).toString().padStart(4, '0');
-    console.log(numfromname,i+1,picnumber);
+    let newname = `DSC_${picnumber}${ext}`;
+    console.log(`${filename} is now ${newname}`)
   }
 }
-
-/*
-    let newname = `DSC_$(picnumber)$(ext)`;
-    rename(filename, newname, () => {
-        console.log(`\n$(filename) is now $(newname)\n`)
-    });
-*/
