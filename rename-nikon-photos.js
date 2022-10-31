@@ -11,6 +11,9 @@ for (let i=0; i<=files.length-1; i++) {
   if (numfromname > i) {
     let picnumber = (i+1).toString().padStart(4, '0');
     let newname = `DSC_${picnumber}${ext}`;
-    console.log(`${filename} is now ${newname}`)
+    fs.rename(`${folderPath}${filename}`, `${folderPath}${newname}`, () => {
+      console.log(filename, newname);
+    });
+    //console.log(`${folderPath}${filename}`, `${folderPath}${newname}`);
   }
 }
