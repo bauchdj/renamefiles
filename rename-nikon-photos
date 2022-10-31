@@ -1,7 +1,15 @@
-const fs = require('fs');
-const folderPath = '/Users/djbii/Desktop/103D3400/' //__dirname for file's current directory
+const fs = require('fs'),
+      path = require('path'),
+      folderPath = '/Users/djbii/Desktop/103D3400/' //__dirname for file's current directory;
 let files = fs.readdirSync(folderPath);
-console.log(files);
+
+for (let i=0; i<=files.length-1; i++) {
+  let filename = files[i],
+  name = path.parse(filename).name,
+  ext = path.parse(filename).ext,
+  numfromname = parseInt(name.split('_').pop());
+  console.log(filename,ext,numfromname,i+1);
+}
 
 /*
 for (let i=1; i<=files.length; i++) {
