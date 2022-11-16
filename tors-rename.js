@@ -17,12 +17,9 @@ function renameTors(files,folderPath) {
 	  ext = path.parse(filename).ext,
 	  moviename = name.split(/.[0-9][0-9][0-9][0-9]./)[0].split('.').join(' '),
 	  newfilename = `${moviename}${ext}`;
-	 	console.log(`${folderPath}${filename}`, `${folderPath}${newfilename}`);
-	/*
 	 	fs.rename(`${folderPath}${filename}`, `${folderPath}${newfilename}`, (err) => {
 			if (err) throw err;
  	  	console.log(filename, newfilename);
 	  });
-	*/
 	}
 }
