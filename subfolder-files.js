@@ -13,10 +13,12 @@ for (let i=0; i<files.length; i++) {
             let newFilePath = `${dir}${name}/${file}`;
             if (fs.existsSync(`${dir}${name}`)) {
                 rename(filePath, newFilePath);
+		//console.log(newFilePath);
             }
             else { 
                 fs.mkdirSync(`${dir}${name}`);
                 rename(filePath, newFilePath);
+		//console.log(newFilePath);
             }
         }
     }
