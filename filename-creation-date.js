@@ -5,7 +5,7 @@ let files = fs.readdirSync(dir).filter(item => !(/(^|\/)\.[^\/\.]/g).test(item))
 
 for (let i=0; i<files.length; i++) {
         let file = files[i];
-	let regex = /201\d*.\d*/;
+	let regex = /20\d*.\d*/;
 	if (file.match(regex)) {
 		var filedate = (file.match(regex)[0].replace(/[^0-9]/g,''));
 		var year = filedate.substring(0,4);

@@ -2,6 +2,13 @@ const fs = require('fs'), path = require('path');
 let dir = process.argv[2].replace(/\/?$/, '/');
 let folders = fs.readdirSync(dir).filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
 
+function rename(p,newP) {
+	fs.rename(p, newP, (err) => {
+		if (err) throw err;
+		console.log(p, newP);
+	});
+}
+
 function renameFiles(folderPath) {
 	let files = fs.readdirSync(folderPath).filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
 	for (let i=0; i<files.length; i++) {
@@ -26,11 +33,4 @@ for (let i=0; i<folders.length; i++) {
 		rename(folderPath, `${dir}${newFolderName}`);
 		//console.log(newFolderName);
 	}
-}
-
-function rename(p,newP) {
-	fs.rename(p, newP, (err) => {
-		if (err) throw err;
-		console.log(p, newP);
-	});
 }
