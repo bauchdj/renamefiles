@@ -17,7 +17,8 @@ function renameFiles(folderPath) {
 		let ext = path.parse(filename).ext;
 		let regex = /yts.*(\-[a-z].*)/i;
 		if (regex.test(filename)) { ext = filename.split(/(\-[a-z].*)/)[1] }
-		let moviename = name.split(/.[0-9][0-9][0-9][0-9]./)[0].split('.').join(' ');
+		//let moviename = name.split(/.[0-9][0-9][0-9][0-9]./)[0].split('.').join(' ');
+		let moviename = name.split(/..[0-9][0-9][0-9]p/)[0].split('.').join(' ');
 		let newFileName = `${moviename}${ext}`;
 		rename(`${folderPath}${filename}`, `${folderPath}${newFileName}`);
 		//console.log(newFileName);
@@ -29,8 +30,9 @@ for (let i=0; i<folders.length; i++) {
 	if (fs.statSync(`${dir}${folder}`).isDirectory()) {
 		let folderPath = `${dir}${folder.replace(/\/?$/, '/')}`;
 		renameFiles(folderPath);
-		let newFolderName = folder.split(/ \([0-9][0-9][0-9][0-9]\)/)[0];
-		rename(folderPath, `${dir}${newFolderName}`);
+		//let newFolderName = folder.split(/ \([0-9][0-9][0-9][0-9]\)/)[0];
+		let newFolderName = folder.split(/ \[/)[0];
+	    rename(folderPath, `${dir}${newFolderName}`);
 		//console.log(newFolderName);
 	}
 }
